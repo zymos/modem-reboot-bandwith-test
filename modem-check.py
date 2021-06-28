@@ -37,14 +37,14 @@
 #
 bandwidth_limit = 5 # Mbps (remember you may be downloading stuff when test is preformed, so keep it low)
 sleep_time = 30 * 60 # sleep time between bandwidth tests (seconds)
-sleep_time_fail = 5 * 60 # sleep time between bandwidth tests when bandwidth is less than bandwidth_limit (seconds)
+sleep_time_fail = 2 * 60 # sleep time between bandwidth tests when bandwidth is less than bandwidth_limit (seconds)
 sleep_time_retry = 10 # sleep time if speed_test_command fails for some reason (seconds)
 sleep_time_reboot = 90 # sleep time it takes for modem to reboot, should be greater than actual time for modem to reconnect to internet (seconds)
 low_speed_test_retrys = 5 # number of failed bandwidth tests before rebooting modem
 
 modem_ip = '192.168.0.1'
 modem_username = 'adminlogin' # modems telnet user name
-modem_pass = 'O8r5%y3R94i' # modems telnet password
+modem_pass = 'Tel0the0net0to0work' # modems telnet password
 modem_reboot_command = 'reboot' # modems telnet command for rebooting
 
 speed_test_command=['/usr/local/bin/speedtest-cli', '--csv', '--no-upload'] # command for bandwith test, must be in a list
@@ -76,6 +76,18 @@ if test:
 
 
 
+def parse_args():
+    """
+    CLI Arguments
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--reboot', help="Just reboot the modem and exit", action="store_true")
+    parser.add_argument('--no-reboot', help="Run speed tests, but no reboot", action="store_true")
+    parser.add_argument('--debug', help="prints debug info", action="store_true")
+
+    args = parser.parse_args()
+    
+    return args
 
 
 def test_connection(host=test_url):
@@ -197,6 +209,14 @@ def main():
     '''
     Main function
     '''
+    args = parse_args()
+
+    if args.reboot:
+        # reboot modem only
+        print("Rebooting modem.")
+        reboot_modem()
+        exit()
+
     low_speed_count = 1
 
     print("Testing modem connection bandwidth, will reboot modem if bandwidth < " + str(bandwidth_limit) + 'Mbps', flush=True)

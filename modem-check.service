@@ -1,0 +1,34 @@
+[Unit]
+Description=Modem Bandwidth/Connectivity Check and Reboot
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=python3 /usr/local/bin/modem-check.py
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target # system level service, required to enable
+
+# Install
+#   Copy script to /usr/local/bin/modem-check.py
+#   Copy this file to /etc/systemd/system/modem-check.service
+#   Load new service files
+#       sudo systemctl daemon-reload
+#   Enable
+#       sudo systemctl enable modem-check
+#
+# Enable/Disable
+#   sudo systemctl enable modem-check
+#   sudo systemctl disable modem-check
+#
+# Manual start and stop
+#   sudo systemctl start modem-check
+#   sudo systemctl stop modem-check
+#
+# Check status
+#   sudo systemctl status modem-check
+#
+# View Logs
+#   sudo journalctl -u modem-check

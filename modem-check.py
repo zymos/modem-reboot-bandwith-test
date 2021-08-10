@@ -80,6 +80,8 @@ def parse_args():
     """
     CLI Arguments
     """
+    import argparse
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--reboot', help="Just reboot the modem and exit", action="store_true")
     parser.add_argument('--no-reboot', help="Run speed tests, but no reboot", action="store_true")

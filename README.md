@@ -17,6 +17,8 @@ For rebooting modem when your modem is causing your internet speed to slow or no
 #Install:
 Can be run on its own or installed as a systemd service.
 To install:
+* Enable Remote Management, Remote Console, and set password
+* Edit modem-check.py, with password
 * Copy script to /usr/local/bin/modem-check.py
     *   sudo cp modem-check.py /usr/local/bin/modem-check.py
 * Copy modem-check.service to /etc/systemd/system/modem-check.service
